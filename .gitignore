@@ -1,0 +1,33 @@
+# python
+*.pyc
+__pycache__
+local_settings.py
+.env
+
+# modules
+node_modules/
+bower_components/
+staticfiles/
+static/dist/
+mediafiles/
+stellar.yaml
+locale/
+
+# db
+*.sql.gz
+*.sqlite3
+dump.rdb
+
+# celery
+celerybeat-schedule
+celerybeat-schedule.db
+
+# idea
+.idea/
+
+# os
+.DS_Store
+
+# other
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]

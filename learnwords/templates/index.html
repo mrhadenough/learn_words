@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+  <head>
+    <title>Sample App</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-flat.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-flat-extras.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  </head>
+  <body>
+    <div id='root'></div>
+    <script src="http://localhost:3000/webpack-dev-server.js"></script>
+    <script src="{% static 'js/dist/bundle.js' %}"></script>
+  </body>
+</html>
