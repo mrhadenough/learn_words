@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import index
+from .views import index, get_random_word
 
 urlpatterns = [
     url(r'^$', index, name='index'),
+    url(r'^word/$', get_random_word, name='word'),
     url(r'^admin/', admin.site.urls),
 ]

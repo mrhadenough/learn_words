@@ -1,45 +1,58 @@
 import {connect} from 'react-redux'
 import React from 'react'
 
-import {requestWord} from '../actions/testAction'
+import {initState, requestWord} from '../actions/testAction'
 
-const Word = React.createClass({
-  propTypes: {
-    active: React.PropTypes.bool,
-    title: React.PropTypes.string,
-    text: React.PropTypes.string
-  },
-  render() {
-    let classes = 'list-group-item' + (this.props.active? ' active' : '')
-    let {title, text} = this.props
-    return <a href="#" className={classes}>
-      <h4 className="list-group-item-heading">{title}</h4>
-      <p className="list-group-item-text">{text}</p>
-    </a>
-  }
-})
+import Message from './Message'
 
+// const Word = React.createClass({
+//   propTypes: {
+//     active: React.PropTypes.bool,
+//     title: React.PropTypes.string,
+//     text: React.PropTypes.string
+//   },
+//   render() {
+//     let classes = 'list-group-item' + (this.props.active? ' active' : '')
+//     let {title, text} = this.props
+//     return <a href="#" className={classes}>
+//       <h4 className="list-group-item-heading">{title}</h4>
+//       <p className="list-group-item-text">{text}</p>
+//     </a>
+//   }
+// })
+
+const Word = (data) => {
+  let classes = 'list-group-item' + (false? ' active' : '')
+  return <a href="javascript:void(0)" className={classes} key={data.id}>
+    <h4 className="list-group-item-heading">{data.name}</h4>
+    <p className="list-group-item-text">{data.translation}</p>
+  </a>
+}
+// <Word title={option.name} text={option.translate}/>
 const App = React.createClass({
   componentWillMount() {
-    // this.props.dispatch(requestWord)
+    // this.props.dispatch(initState())
   },
   loadWord() {
-    console.log(requestWord)
-    this.props.dispatch(requestWord)
+    this.props.dispatch(requestWord())
   },
   render() {
+    let {options} = this.props
+    let status = (this.props.status === 'fail') ? 'danger' : ''
     return (
       <div className="row">
+        {status &&
+          <div className="col-md-12">
+            <Message title="Error" text="Something went wrong" type={status}/>
+          </div>
+        }
         <div className="col-md-12">
           <div className="list-group">
-            <Word title="asdas" text="asdasdaaaaaa"/>
-            <Word title="asdas" text="asdasdaaaaaa"/>
-            <Word title="asdas" text="aaa11aa" active={true}/>
+            {options.map(option => Word(option))}
           </div>
         </div>
-        <div className="col-md-12">
-          <button type="button" className="btn btn-primary btn-lg active" onClick={this.loadWord}>Start</button>
-          <button type="button" className="btn btn-default btn-lg active">Button</button>
+        <div className="col-md-12 text-center">
+          <button type="button" className="btn btn-primary btn-lg active" onClick={this.loadWord}>Next</button>
         </div>
     </div>
     );
@@ -48,7 +61,7 @@ const App = React.createClass({
 
 // export default {App}
 function mapStateToProps(state) {
-  return {...state}
+  return {...state.test}
 }
 
 export default connect(mapStateToProps)(App)

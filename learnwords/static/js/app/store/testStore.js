@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
-import testReducer from '../reducers/testReducer.js'
+import testReducer from '../reducers/testReducer'
 
 export default function configureStore(initialState) {
   const store = createStore(testReducer, initialState, compose(
