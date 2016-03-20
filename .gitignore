@@ -12,6 +12,7 @@ static/js/dist/
 mediafiles/
 stellar.yaml
 locale/
+npm-debug.log
 
 # db
 *.sql.gz

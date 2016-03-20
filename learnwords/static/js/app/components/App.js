@@ -1,24 +1,44 @@
 import {connect} from 'react-redux'
 import React from 'react'
 
+import {requestWord} from '../actions/testAction'
+
+const Word = React.createClass({
+  propTypes: {
+    active: React.PropTypes.bool,
+    title: React.PropTypes.string,
+    text: React.PropTypes.string
+  },
+  render() {
+    let classes = 'list-group-item' + (this.props.active? ' active' : '')
+    let {title, text} = this.props
+    return <a href="#" className={classes}>
+      <h4 className="list-group-item-heading">{title}</h4>
+      <p className="list-group-item-text">{text}</p>
+    </a>
+  }
+})
+
 const App = React.createClass({
+  componentWillMount() {
+    // this.props.dispatch(requestWord)
+  },
+  loadWord() {
+    console.log(requestWord)
+    this.props.dispatch(requestWord)
+  },
   render() {
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="list-group">
-            <a href="#" className="list-group-item active">
-              Cras justo odio
-            </a>
-            <a href="#" className="list-group-item">Dapibus ac facilisis in</a>
-            <a href="#" className="list-group-item">Morbi leo risus</a>
-            <a href="#" className="list-group-item">Porta ac consectetur ac</a>
-            <a href="#" className="list-group-item">Vestibulum at eros</a>
+            <Word title="asdas" text="asdasdaaaaaa"/>
+            <Word title="asdas" text="asdasdaaaaaa"/>
+            <Word title="asdas" text="aaa11aa" active={true}/>
           </div>
         </div>
         <div className="col-md-12">
-          Button Copy
-          <button type="button" className="btn btn-primary btn-lg active">Primary button</button>
+          <button type="button" className="btn btn-primary btn-lg active" onClick={this.loadWord}>Start</button>
           <button type="button" className="btn btn-default btn-lg active">Button</button>
         </div>
     </div>

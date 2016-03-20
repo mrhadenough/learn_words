@@ -7,12 +7,13 @@ const initialState = {
 }
 
 function test(state=initialState, action) {
+    console.log(action, state)
     switch(action.type) {
         case INIT_STATE:
             return {...initialState}
         case REQUEST_WORD:
             // ajax
-            return {...state}
+            return {...state, status: 'pending'}
         case LOADING_WORD:
             // should be set after request word
             return {...state, status: 'pending'}

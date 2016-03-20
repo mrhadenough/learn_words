@@ -17,12 +17,7 @@ module.exports = {
     publicPath: './static/js/dist/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.SourceMapDevToolPlugin({
-      filename: "[file].map",
-      cheap: true
-    }),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [{
