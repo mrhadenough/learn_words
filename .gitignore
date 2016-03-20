@@ -8,7 +8,7 @@ local_settings.py
 node_modules/
 bower_components/
 staticfiles/
-static/dist/
+static/js/dist/
 mediafiles/
 stellar.yaml
 locale/
