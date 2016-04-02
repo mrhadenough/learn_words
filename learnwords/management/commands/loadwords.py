@@ -1,8 +1,9 @@
 import re
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from learnwords.models import Word
+
 
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
@@ -12,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         Word.objects.all().delete()
-        reg = r'([0-9]+) *?([\w ]+) *?(?=\[)\[(.+?)\] *?(.+?) *?([0-9][0-9\.]*)'
+        reg = r'([0-9]+) *?([\w ]+) *?(?=\[)\[(.+?)\] +?(.*?) +?([0-9][0-9\.]*)\S*$'
         with open(options['file'][0], 'r') as f:
             for line in f.readlines():
                 match = re.search(reg, line)

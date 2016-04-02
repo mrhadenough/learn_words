@@ -1,5 +1,6 @@
+import random
 from django.http import JsonResponse
-from django.core import serializers
+# from django.core import serializers
 from django.shortcuts import render
 
 from .models import Word
@@ -7,6 +8,7 @@ from .models import Word
 
 def index(request):
     return render(request, 'index.html')
+
 
 def get_random_word(request):
     words = Word.objects.order_by('?').all()[:5]
@@ -21,7 +23,7 @@ def get_random_word(request):
         }
         options.append(word)
     data = {
-        'word': options[0],
+        'word': random.choice(options),
         'options': options[1:],
     }
     return JsonResponse(data)

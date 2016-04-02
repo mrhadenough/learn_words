@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import React from 'react'
 
-import {initState, requestWord} from '../actions/testAction'
+import {initState, voteWord, requestWord} from '../actions/testAction'
 
 import Message from './Message'
 
@@ -21,11 +21,15 @@ import Message from './Message'
 //   }
 // })
 
-const Word = (data) => {
+const Word = (dispatch, data, showTranslation) => {
   let classes = 'list-group-item' + (false? ' active' : '')
   return <a href="javascript:void(0)" className={classes} key={data.id}>
     <h4 className="list-group-item-heading">{data.name}</h4>
-    <p className="list-group-item-text">{data.translation}</p>
+    {showTranslation ?
+      <p className="list-group-item-text">{data.translation}</p>
+    :
+      <p className="list-group-item-text" onClick={() => {dispatch(voteWord(data))}}>&nbsp;</p>
+    }
   </a>
 }
 // <Word title={option.name} text={option.translate}/>
@@ -37,7 +41,7 @@ const App = React.createClass({
     this.props.dispatch(requestWord())
   },
   render() {
-    let {options} = this.props
+    let {options, voted, answer} = this.props
     let status = (this.props.status === 'fail') ? 'danger' : ''
     return (
       <div className="row">
@@ -47,8 +51,15 @@ const App = React.createClass({
           </div>
         }
         <div className="col-md-12">
+          {answer}
+        </div>
+        <div className="col-md-12">
+        <h3>{this.props.word.translation}</h3>
+        <br/>
+        </div>
+        <div className="col-md-12">
           <div className="list-group">
-            {options.map(option => Word(option))}
+            {options.map(option => Word(this.props.dispatch, option, voted))}
           </div>
         </div>
         <div className="col-md-12 text-center">
