@@ -1,0 +1,8 @@
+staging:
+  type: deploy
+  script:
+    - npm install
+    - make build_static
+    - make deploy_staging
+  only:
+    - master

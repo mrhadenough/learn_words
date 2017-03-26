@@ -1,0 +1,37 @@
+server {
+
+    listen 80;
+    server_name {{ host }};
+
+    access_log /var/log/nginx/{{folder_name}}.access.log;
+    error_log /var/log/nginx/{{folder_name}}.error.log;
+
+    location / {
+        include /etc/nginx/includes/{{folder_name}}_proxy.conf;
+    }
+
+    location /admin {
+        auth_basic "closed area";
+        auth_basic_user_file /etc/nginx/{{folder_name}}_htpasswd;
+        include /etc/nginx/includes/{{folder_name}}_proxy.conf;
+    }
+
+    location /static {
+        autoindex on;
+        alias /opt/{{folder_name}}/{{project_name}}/staticfiles;
+        include /etc/nginx/includes/staticcache.conf;
+    }
+
+    location /media {
+        autoindex on;
+        alias /opt/{{folder_name}}/{{project_name}}/mediafiles;
+        include /etc/nginx/includes/staticcache.conf;
+    }
+
+}
+
+server {
+    listen 81 proxy_protocol;
+    server_name www.example_domain.com;
+    return 301 http://example_domain.com$request_uri;
+}

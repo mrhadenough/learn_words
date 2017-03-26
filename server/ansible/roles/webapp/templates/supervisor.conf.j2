@@ -1,0 +1,33 @@
+[program:{{folder_name}}]
+command = /opt/{{folder_name}}_gunicorn.sh
+user = root
+redirect_stderr = true
+stdout_logfile=/var/log/{{folder_name}}_stdout.log
+stderr_logfile=/var/log/{{folder_name}}_stderr.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs=600
+
+[program:{{folder_name}}_celery]
+command = /opt/{{folder_name}}/venv/bin/celery worker --app=webapp.celery -l info --concurrency=2 -Ofair
+directory = /opt/{{folder_name}}/{{project_name}}
+user = celery
+stdout_logfile = /var/log/{{folder_name}}_celery_stdout.log
+stderr_logfile = /var/log/{{folder_name}}_celery_stderr.log
+autostart = true
+autorestart = true
+startsecs = 10
+stopwaitsecs = 600
+
+[program:{{folder_name}}_celery_beat]
+command = /opt/{{folder_name}}/venv/bin/celery beat --pidfile=/tmp/{{folder_name}}_celerybeat.pid --app=webapp.celery -l info -s /opt/{{folder_name}}/celerybeat-schedule
+directory = /opt/{{folder_name}}/{{project_name}}
+user = celery
+stdout_logfile = /var/log/{{folder_name}}_beat_stdout.log
+stderr_logfile = /var/log/{{folder_name}}_beat_stderr.log
+autostart = true
+autorestart = true
+startsecs = 10
+stopwaitsecs = 600
+loglevel = "info"

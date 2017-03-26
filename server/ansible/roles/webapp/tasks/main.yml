@@ -1,0 +1,33 @@
+- user: name=celery
+
+- name: Create backend directory
+  file: path=/opt/{{folder_name}}/webapp/core state=directory owner=ubuntu group=ubuntu
+
+- name: gunicorn file
+  template: src=gunicorn.sh.j2 dest=/opt/{{folder_name}}_gunicorn.sh mode="u+x"
+
+- name: local settings file
+  template: src=local_settings.py.j2 dest=/opt/{{folder_name}}/webapp/core/local_settings.py
+  notify: "restart {{folder_name}}"
+
+- name: password for nginx
+  htpasswd: path=/etc/nginx/webapp_htpasswd name=admin password={{ nginx_password }} owner=root group=www-data mode=0640
+
+- file: path=/etc/nginx/includes state=directory
+- name: Nginx proxy includes
+  template: src=proxy.conf.j2 dest=/etc/nginx/includes/{{folder_name}}_proxy.conf
+  notify: restart nginx
+- name: Nginx static cache include
+  template: src=staticcache.conf.j2 dest=/etc/nginx/includes/staticcache.conf
+
+- name: Nginx base config
+  template: src=nginx_base.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: restart nginx
+
+- name: Nginx config for app
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/{{folder_name}}.conf
+  notify: restart nginx
+
+- name: Supervisor config for backend app
+  template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/{{folder_name}}.conf
+  notify: restart supervisor

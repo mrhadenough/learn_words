@@ -1,0 +1,42 @@
+# python
+*.pyc
+*.bak
+*.dat
+*.dir
+__pycache__
+local_settings.py
+.env
+.venv
+.python-version
+
+# modules
+node_modules/
+bower_components/
+staticfiles/
+/core/static/js/dist/
+mediafiles/
+stellar.yaml
+locale/
+npm-debug.log
+webpack-stats.json
+webpack-stats-vendor.json
+webpack-stats.json
+
+# db
+*.sql.gz
+*.sqlite3
+dump.rdb
+
+# celery
+celerybeat-schedule
+celerybeat-schedule.db
+
+# idea
+.idea/
+
+# os
+.DS_Store
+
+# other
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]

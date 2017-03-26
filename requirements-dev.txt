@@ -1,0 +1,14 @@
+-r requirements.txt
+
+prospector
+factory_boy
+mock
+ipdb
+pylint
+pyflakes
+pep8
+coverage
+flake8
+django-debug-toolbar
+stellar
+paramiko==2.0.0

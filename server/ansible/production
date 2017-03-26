@@ -1,0 +1,14 @@
+[production]
+8.8.8.8 ansible_user=ubuntu
+
+[production:vars]
+
+domain_name=example_domain
+folder_name=webapp
+project_name=learn_words
+gunicorn_port=8000
+postgres_port=5432
+postgres_user=webapp
+nginx_password=webapp
+host=webapp.com
+mongo_port=27017

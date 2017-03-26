@@ -1,0 +1,9 @@
+---
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
+- name: restart nginx
+  service: name=nginx state=restarted
+
+- name: restart {{folder_name}}
+  supervisorctl: name={{folder_name}} state=restarted

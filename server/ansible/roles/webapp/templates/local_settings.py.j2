@@ -1,0 +1,27 @@
+DEBUG = False
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'webapp',
+        'USER': '{{ postgres_user }}',
+        'PASSWORD': "{{ postgres_password }}",
+        'HOST': 'localhost',
+        'PORT': '{{ postgres_port }}',
+    }
+}
+
+ALLOWED_HOSTS = ['{{ host }}']
+
+MONGO_HOST = '127.0.0.1'
+MONGO_PORT = {{ mongo_port }}
+
+HOST = '{{ host }}'
+
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'postmaster@jenkins.lyapun.com'
+EMAIL_HOST_PASSWORD = '{{ email_host_password }}'
+DEFAULT_FROM_EMAIL = 'postmaster@jenkins.lyapun.com'

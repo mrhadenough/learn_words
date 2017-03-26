@@ -1,0 +1,14 @@
+- name: create data directory for mongo
+  file: path=/data/mongo-{{folder_name}} state=directory mode=6777
+
+- name: run mongo container
+  docker:
+    name: "{{folder_name}}_mongo"
+    image: mongo:3.2
+    ports:
+      - 127.0.0.1:{{ mongo_port }}:27017
+    restart_policy: always
+    volumes:
+      - "/data/mongo-{{folder_name}}:/data/db"
+    command: --storageEngine wiredTiger
+    docker_api_version: 1.21

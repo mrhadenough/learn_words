@@ -1,0 +1,15 @@
+[staging]
+8.8.8.8 ansible_user=ubuntu
+
+[staging:vars]
+
+domain_name=example_domain
+folder_name=dev_webapp
+project_name=learn_words
+gunicorn_port=8410
+postgres_port=5444
+postgres_password=webapp
+postgres_user=webapp
+nginx_password=webapp
+host=dev.webapp.com
+mongo_port=27890
