@@ -13,7 +13,7 @@ const Home = () => (
   <div>Home</div>
 )
 
-export default (
+export default () => (
   <Router>
     <div>
       <ul>

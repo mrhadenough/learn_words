@@ -9,7 +9,7 @@ import { render } from 'react-dom'
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
 } from 'react-router-dom'
 // import { createHashHistory } from 'history'
 import rootReducer from './reducers'
