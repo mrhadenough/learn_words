@@ -1,9 +1,13 @@
+import os
 from lxml import etree
+
+from django.conf import settings
 
 from .models import Word
 
+
 def parse_files():
-    file_path = '/Users/kostya/Downloads/Word frequency_ based on 450 million word COCA corpus.html'
+    file_path = os.path.join(settings.BASE_DIR, 'data/words.html')
     f = open(file_path, 'r')
     content = f.read()
 
@@ -26,4 +30,4 @@ def parse_files():
             frequency=frequency,
             dispersion=dispersion,
         )
-        print(word)
+        yield (word)

@@ -5,6 +5,15 @@ SSH_KEY=
 run:
 	python manage.py runserver 8000
 
+compose:
+	docker-compose up -d
+
+compose_stop:
+	docker-compose up -d
+
+compose_restart:
+	docker-compose stop && docker-compose rm -f && docker-compose up -d
+
 celery:
 	celery -A webapp.celery:app worker -B -l info --concurrency=2 -Ofair
 

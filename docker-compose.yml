@@ -1,0 +1,29 @@
+# web-app:
+#   image: eboraas/apache-php
+#   environment:
+#     - DB_NAME=wordpress
+#     - DB_USER=wordpress
+#     - DB_PASSWORD=wordpress
+#     - DB_HOST=mysql
+#     - WP_DEBUG=true
+#   links:
+#     - mysql:mysql
+#   ports:
+#     - "127.0.0.1:80:80"
+#   volumes:
+#     - ./app/:/var/www/html
+#     # - ./config/php.ini:/etc/php5/conf.d/php.ini
+#     - ./config/php.ini:/etc/php5/apache2/php.ini
+#     - ./config/apache2.conf:/etc/apache2/apache2.conf
+postgres:
+  image: postgres
+  environment:
+    POSTGRES_USER: root
+    POSTGRES_PASSWORD: root
+    POSTGRES_DB: db
+  volumes:
+    - ./db/:/var/lib/postgresql/data
+  ports:
+    - 127.0.0.1:5432:5432
+  expose:
+    - 5432
