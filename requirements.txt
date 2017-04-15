@@ -4,3 +4,4 @@ django-webpack-loader==0.4.1
 djangorestframework==3.6.2
 Markdown==2.6.8
 psycopg2==2.7.1
+lxml==3.7.3
