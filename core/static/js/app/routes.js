@@ -3,11 +3,12 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
 } from 'react-router-dom'
 
 /* containers */
-import PageNotFound from './containers/system/PageNotFound'
+// import PageNotFound from './containers/system/PageNotFound'
+import WordsSuggest from './containers/words/WordsSuggest'
 
 const Home = () => (
   <div>Home</div>
@@ -18,12 +19,13 @@ export default () => (
     <div>
       <ul>
         <li><Link to="/">Home</Link></li>
+        <li><Link to="/words">Words</Link></li>
       </ul>
 
-      <hr/>
+      <hr />
 
-      <Route exact path="/" component={Home}/>
-      <Route path="*" component={PageNotFound}/>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/words" component={WordsSuggest} />
     </div>
   </Router>
 )

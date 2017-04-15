@@ -39,7 +39,7 @@ const formRequest = (url, payload) => {
   return deferred.promise()
 }
 
-const create = ({ baseURL = `http://${window.HOST}/api/v1/webapp/`, token = null } = {}) => {
+const create = ({ baseURL = `http://${window.HOST}/api/v1`, token = null } = {}) => {
   const headers = {
     'Cache-Control': 'no-cache',
     'Content-Type': 'application/json',
@@ -52,21 +52,7 @@ const create = ({ baseURL = `http://${window.HOST}/api/v1/webapp/`, token = null
   })
 
   return {
-    setProfile: payload => api.put('/account/', payload),
-    getProfile: () => api.get('/account/'),
-    getSuggestedArticles: researcherName => api.get(`/suggested_articles/?researcher_name=${researcherName}`),
-    getArticle: action => api.get(`/articles/${action}/`),
-    addArticle: payload => formRequest(`${baseURL}articles/`, payload),
-    removeArticle: id => api.delete(`${baseURL}articles/${id}`),
-    searchSuggestedArticles: search => api.get('/suggested_articles_search/', { search }),
-    signupUser: action => api.post('/signup/', action),
-    checkEmail: payload => api.get('/accounts/check_email/', payload),
-    sendActivationEmail: payload => api.get('/accounts/send_activation_email/', payload),
-    getArticles: action => api.get('/articles/', action),
-    getReadPaper: articleId => api.get(`/read_papers/${articleId}/`),
-    setReadPaper: payload => api.post('/read_papers/', payload),
-    removeSuggestedArticle: payload => api.delete(`/suggested_articles/${payload.researcher_id}/${payload.paper_id}/`),
-    addSuggestedArticle: payload => api.post('/suggested_articles/', payload),
+    getWords: () => api.get('/words/'),
   }
 }
 

@@ -1,7 +1,36 @@
 import { combineReducers } from 'redux'
 import Immutable from 'seamless-immutable'
 
-// import ArticleReducer from './ArticleReducer'
+const defaultReducer = (state, action) => {
+  const newState = { ...state }
+  if (action.type.endsWith('PENDING')) {
+    return {
+      ...state,
+      success: false,
+      failed: false,
+      pending: true,
+      data: {},
+    }
+  } else if (action.type.endsWith('SUCCESS')) {
+    return {
+      ...state,
+      success: true,
+      failed: false,
+      pending: false,
+      data: action.payload && action.payload.data,
+    }
+  } else if (action.type.endsWith('FAILED')) {
+    return {
+      ...state,
+      success: false,
+      failed: true,
+      pending: false,
+      error: action.payload.problem,
+    }
+  }
+  return newState
+}
+
 
 const rootReducer = (state = new Immutable({}), action) => {
   // add base logic for success pending faild
@@ -13,5 +42,5 @@ const rootReducer = (state = new Immutable({}), action) => {
 
 export default combineReducers({
   rootReducer,
-  // article: ArticleReducer,
+  words: defaultReducer,
 })

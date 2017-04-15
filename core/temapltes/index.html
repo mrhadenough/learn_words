@@ -7,6 +7,9 @@
 </head>
 <body>
   <div id="root"></div>
+  <script type="text/javascript">
+    window.HOST = "{{ HOST }}";
+  </script>
   {% render_bundle 'vendor' config='VENDOR' %}
   {% render_bundle 'app' %}
 </body>

@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.conf import settings
 
 
 def index(request):
-    from .utils import parse_files
-    parse_files()
-    return render(request, 'index.html')
+    context = {
+        'HOST': settings.HOST,
+    }
+    return render(request, 'index.html', context)
