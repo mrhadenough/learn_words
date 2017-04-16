@@ -13,15 +13,14 @@ def parse_files():
 
     tree = etree.HTML(content)
     for row in tree.xpath('//*[@id="table1"]/tbody/tr'):
-        word = getattr(row.find('td[2]'), 'text', '')
+        word = (getattr(row.find('td[2]'), 'text', '') or '').strip(' ')
         part_of_speach = getattr(row.find('td[3]'), 'text', '')
         frequency = getattr(row.find('td[4]'), 'text', '')
         dispersion = getattr(row.find('td[5]'), 'text', '')
         if not word or not frequency:
             continue
         if not frequency:
-            from ipdb import set_trace; set_trace()
-            pass
+            print('Error: frequency is not set')
         if not frequency.isdigit():
             continue
         word = Word.objects.create(

@@ -3,6 +3,7 @@ import { createTypes } from 'reduxsauce'
 
 export const asyncTypes = [
   'GET_WORDS',
+  'LOGIN',
 ]
 
 const generateAsyncTypes = actionTypes => actionTypes.map(e => `${e}_PENDING\n${e}_SUCCESS\n${e}_FAILED\n`).join('')

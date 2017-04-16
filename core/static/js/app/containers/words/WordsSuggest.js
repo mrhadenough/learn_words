@@ -21,7 +21,7 @@ class WordsSuggest extends React.Component {
         <div>
           <div>
             {words.map(word => (
-              <p>
+              <p key={word.id}>
                 {word.word} - {word.part_of_speach}
               </p>
             ))}

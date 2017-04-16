@@ -66,3 +66,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email], html_message=message, **kwargs)
+
+
+class FacebookUser(models.Model):
+    user = models.ForeignKey(User)
+    facebook_user_id = models.CharField(max_length=255, null=True)
+    access_token = models.CharField(max_length=255, null=True)
+    email = models.EmailField(max_length=255, null=True)
+    expires_in = models.IntegerField(default=0)
+    name = models.CharField(max_length=255, null=True)
+    picture = models.CharField(max_length=255, null=True)

@@ -165,6 +165,8 @@ WEBPACK_LOADER = {
 
 CELERY_TIMEZONE = 'UTC'
 
+FACEBOOK_ID = os.environ.get('FACEBOOK_ID', '')
+
 try:
     from .local_settings import *
 except ImportError:
