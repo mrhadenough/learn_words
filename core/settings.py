@@ -28,7 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 HOST = 'localhost:8000'
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'webpack_loader',
 
+    'accounts',
     'core',
 ]
 
@@ -132,9 +132,15 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
-# AUTH_USER_MODEL = 'accounts.User'
-# USERNAME_FIELD = 'email'
-# ACCOUNT_ACTIVATION_DAYS = 7
+AUTH_USER_MODEL = 'accounts.User'
+USERNAME_FIELD = 'email'
+ACCOUNT_ACTIVATION_DAYS = 7
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
 
 
 STATICFILES_DIRS = (
