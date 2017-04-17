@@ -1,4 +1,6 @@
+import random
 from collections import namedtuple
+
 from sqlalchemy import or_, and_
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
@@ -43,7 +45,9 @@ class WordsViewSet(viewsets.ModelViewSet):
                 )
                 .outerjoin(word_score_table, word_score_table.c.word_id == word_table.c.id)
                 .order_by('position')
-                .limit(10)
+                .limit(20)
             )
-            return Response([WordPropose(*i)._asdict() for i in words])
+            result = [WordPropose(*i)._asdict() for i in words][:10]
+            random.shuffle(result)
+            return Response(result)
         return super(WordsViewSet, self).list(request)
