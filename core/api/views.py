@@ -1,9 +1,13 @@
+from collections import namedtuple
 from sqlalchemy import or_, and_
 from rest_framework import viewsets, permissions
+from rest_framework.response import Response
 from django.conf import settings
 
 from .serializers import WordSerializer
 from core.models import Word, WordScore
+
+WordPropose = namedtuple('WordPropose', ['id', 'word', 'translation'])
 
 
 class WordsViewSet(viewsets.ModelViewSet):
@@ -11,19 +15,23 @@ class WordsViewSet(viewsets.ModelViewSet):
     serializer_class = WordSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
-    def get_queryset(self):
-        progress = self.request.user.progress
-        start_position = progress - settings.TEST_VARIANCE
-        if progress - settings.TEST_VARIANCE <= 0:
-            start_position = 0
+    def list(self, request):
+        if request.GET.get('propose'):
+            progress = self.request.user.progress
+            start_position = progress - settings.TEST_VARIANCE
+            if progress - settings.TEST_VARIANCE <= 0:
+                start_position = 0
 
-        if self.request.GET.get('propose'):
             word_score_table = settings.SA_BRIDGE[WordScore]
             word_table = settings.SA_BRIDGE[Word]
             session = settings.DB_SESSION
 
             words = (
-                session.query(word_table.c.id)
+                session.query(
+                    word_table.c.id,
+                    word_table.c.word,
+                    word_table.c.translation,
+                )
                 .filter(
                     and_(
                         word_table.c.position >= start_position,
@@ -37,6 +45,5 @@ class WordsViewSet(viewsets.ModelViewSet):
                 .order_by('position')
                 .limit(10)
             )
-            ids = [i[0] for i in session.execute(words)]
-            return Word.objects.filter(id__in=ids)
-        return Word.objects.all()
+            return Response([WordPropose(*i)._asdict() for i in words])
+        return super(WordsViewSet, self).list(request)
