@@ -22,7 +22,7 @@ class WordsSuggest extends React.Component {
           <div>
             {words.map(word => (
               <p key={word.id}>
-                {word.word} - {word.part_of_speach}
+                {word.word} - {word.part_of_speach} ({word.translation.ua.join(', ')})
               </p>
             ))}
           </div>

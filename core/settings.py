@@ -1,6 +1,8 @@
 import os
 
 from sabridge import Bridge
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -155,7 +157,9 @@ try:
 except ImportError:
     pass
 
+
 SA_BRIDGE = Bridge()
+DB_SESSION = sessionmaker(bind=create_engine(SA_BRIDGE.connection_url()))()
 
 if DEBUG:
     TEMPLATES[0]['OPTIONS']['debug'] = True

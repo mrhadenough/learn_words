@@ -1,4 +1,4 @@
-from sqlalchemy import and_, case
+from sqlalchemy import or_, and_
 from rest_framework import viewsets, permissions
 from django.conf import settings
 
@@ -20,23 +20,23 @@ class WordsViewSet(viewsets.ModelViewSet):
         if self.request.GET.get('propose'):
             word_score_table = settings.SA_BRIDGE[WordScore]
             word_table = settings.SA_BRIDGE[Word]
+            session = settings.DB_SESSION
 
             words = (
-                word_table.select()
-                .where(
+                session.query(word_table.c.id)
+                .filter(
                     and_(
-                        word_table.c.id >= start_position,
-                        case(
-                            [
-                                (word_score_table.c.word_id == word_table.c.id, word_score_table.c.right_answers_in_a_row < 5),
-                                (word_score_table.c.word_id != word_table.c.id, True)
-                            ], True
+                        word_table.c.position >= start_position,
+                        or_(
+                            word_score_table.c.right_answers_in_a_row == None,  # noqa
+                            word_score_table.c.right_answers_in_a_row < 5,
                         ),
-                    ),
+                    )
                 )
+                .outerjoin(word_score_table, word_score_table.c.word_id == word_table.c.id)
+                .order_by('position')
                 .limit(10)
-                .execute()
             )
-
-            return list(words)
+            ids = [i[0] for i in session.execute(words)]
+            return Word.objects.filter(id__in=ids)
         return Word.objects.all()

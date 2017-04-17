@@ -17,7 +17,7 @@ def yandex_translate(text, lang):
     }
     response = requests.get(url, params=params)
     if not response.ok:
-        raise Exception('Bad response'.format())
+        raise Exception('Bad response'.format(response.content))
     return response.json()['text']
 
 
