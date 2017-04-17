@@ -8,7 +8,7 @@ import Actions from '../../actions/Creators'
 
 class WordsSuggest extends React.Component {
   componentWillMount() {
-    this.props.getWords()
+    this.props.getWords({ propose: 1 })
   }
   render() {
     if (!this.props.words.success) {

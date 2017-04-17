@@ -48,7 +48,9 @@ class User(AbstractBaseUser, PermissionsMixin):
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    user_score = models.IntegerField(default=0)
+    progress = models.IntegerField(default=0)
+    right_answers = models.IntegerField(default=0)
+    wrong_answers = models.IntegerField(default=0)
 
     USERNAME_FIELD = 'email'
 
@@ -66,6 +68,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email], html_message=message, **kwargs)
+
+    # @property
+    # def next_words(self):
+    #     from core.models import Words
+    #     Words.objects.filter()
 
 
 class FacebookUser(models.Model):

@@ -2,15 +2,19 @@ import json
 
 from django.contrib.auth import login
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from accounts.models import FacebookUser, User
 from accounts.forms import FacebookUserForm
+from .serializers import UserSerializer
 
 
 class UserAPI(APIView):
+    permission_classes = (IsAuthenticated, )
+
     def get(self, request, format=None):
-        return Response({'success': True})
+        return Response(UserSerializer(request.user).data)
 
     def post(self, request):
         try:
@@ -33,6 +37,7 @@ class UserAPI(APIView):
         facebook_user = form.save(commit=False)
         user = User.objects.create(first_name=data.get('name'), email=data.get('email'))
         facebook_user.user = user
+        facebook_user.is_active = True
         facebook_user.save()
         login(request, user)
         return Response({'success': True})

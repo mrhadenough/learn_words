@@ -8,6 +8,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for i, word in enumerate(parse_files()):
-            if i % 100 == 0:
-                print(word)
+            if i % 10 == 0:
+                print(i, word)
         self.stdout.write(self.style.SUCCESS('Successfully imported words'))

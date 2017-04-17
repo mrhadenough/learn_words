@@ -52,7 +52,7 @@ const create = ({ baseURL = `http://${window.HOST}/api/v1`, token = null } = {})
   })
 
   return {
-    getWords: () => api.get('/words/'),
+    getWords: payload => api.get('/words/', payload),
     login: payload => api.post('/account/', payload),
   }
 }
