@@ -14,7 +14,7 @@ class WordsSuggest extends React.Component {
     if (!this.props.words.success) {
       return <div>Loading..</div>
     }
-    const words = this.props.words.data
+    const words = this.props.words.data.results
     return (
       <div>
         <h1>WordsSuggest</h1>

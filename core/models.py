@@ -1,9 +1,16 @@
+from aldjemy.meta import AldjemyMeta
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from accounts.models import User
 
 
-class Word(models.Model):
+class WordMixin(object):
+    def get_translation(self):
+        return str(self.translation)
+
+
+class Word(models.Model, metaclass=AldjemyMeta):
+    aldjemy_mixin = WordMixin
     position = models.IntegerField(default=1)
     word = models.CharField(max_length=255, null=True)
     translation = JSONField(default={})

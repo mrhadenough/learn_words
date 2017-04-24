@@ -1,8 +1,7 @@
 import os
+import logging
 
-from sabridge import Bridge
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.types import String
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +23,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'webpack_loader',
+    'aldjemy',
 
     'accounts',
     'core',
@@ -146,6 +146,10 @@ WEBPACK_LOADER = {
     },
 }
 
+ALDJEMY_DATA_TYPES = {
+    'JSONField': String,
+}
+
 CELERY_TIMEZONE = 'UTC'
 
 TEST_VARIANCE = 0
@@ -158,8 +162,8 @@ except ImportError:
     pass
 
 
-SA_BRIDGE = Bridge()
-DB_SESSION = sessionmaker(bind=create_engine(SA_BRIDGE.connection_url()))()
+# SA_BRIDGE = Bridge()
+# DB_SESSION = sessionmaker(bind=create_engine(SA_BRIDGE.connection_url()))()
 
 if DEBUG:
     TEMPLATES[0]['OPTIONS']['debug'] = True
@@ -217,7 +221,5 @@ else:
             },
         },
     }
-    MIDDLEWARE = (
-        'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
-    ) + MIDDLEWARE
+    MIDDLEWARE += ['raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware']
     SENTRY_CELERY_LOGLEVEL = logging.INFO

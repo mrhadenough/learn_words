@@ -8,10 +8,11 @@ from rest_framework.response import Response
 from accounts.models import FacebookUser, User
 from accounts.forms import FacebookUserForm
 from .serializers import UserSerializer
+from .permissions import UserPermission
 
 
 class UserAPI(APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (UserPermission, )
 
     def get(self, request, format=None):
         return Response(UserSerializer(request.user).data)
@@ -22,7 +23,7 @@ class UserAPI(APIView):
         except Exception:
             return Response({'details': 'Invalid JSON'}, 400)
 
-        facebook_user = FacebookUser.objects.filter(access_token=data.get('access_token', ''))
+        facebook_user = FacebookUser.objects.filter(facebook_user_id=data.get('userID', '')).first()
         if facebook_user:
             login(request, facebook_user.user)
             return Response({'success': True})
