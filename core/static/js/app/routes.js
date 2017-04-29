@@ -17,11 +17,10 @@ const Home = () => (
   <div>Home</div>
 )
 
-
 export default () => (
   <HashRouter>
-    <div>
-      <ul>
+    <div style={{ paddingTop: '10px' }}>
+      <ul className="nav nav-tabs">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/words">Words</Link></li>
         <li><Link to="/login">Login</Link></li>
@@ -29,9 +28,11 @@ export default () => (
 
       <hr />
 
-      <Route exact path="/" component={Home} />
-      <Route exact path="/words" component={WordsSuggest} />
-      <Route exact path="/login" component={FacebookLogin} />
+      <div style={{ margin: '10px' }}>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/words" component={WordsSuggest} />
+        <Route exact path="/login" component={FacebookLogin} />
+      </div>
     </div>
   </HashRouter>
 )

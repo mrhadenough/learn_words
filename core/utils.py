@@ -1,4 +1,6 @@
 import os
+from Crypto.Cipher import AES
+import base64
 
 import requests
 from lxml import etree
@@ -53,3 +55,13 @@ def parse_files():
         )
         yield (word)
         position += 1
+
+
+def encrypt_text(text):
+    cipher = AES.new(settings.SECRET_KEY[:32], AES.MODE_ECB)
+    return base64.b64encode(cipher.encrypt(str(text).ljust(32)))
+
+
+def decrypt_text(text):
+    cipher = AES.new(settings.SECRET_KEY[:32], AES.MODE_ECB)
+    return cipher.decrypt(base64.b64decode(str(text))).decode('utf-8').strip(' ')

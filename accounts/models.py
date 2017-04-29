@@ -52,6 +52,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     right_answers = models.IntegerField(default=0)
     wrong_answers = models.IntegerField(default=0)
 
+    language = models.CharField(max_length=255, default='eng')
+
     USERNAME_FIELD = 'email'
 
     def __str__(self):

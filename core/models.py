@@ -12,8 +12,11 @@ class WordMixin(object):
 class Word(models.Model, metaclass=AldjemyMeta):
     aldjemy_mixin = WordMixin
     position = models.IntegerField(default=1)
-    word = models.CharField(max_length=255, null=True)
-    translation = JSONField(default={})
+
+    word_en = models.CharField(max_length=255, null=True)
+    word_uk = models.CharField(max_length=255, null=True)
+    word_ru = models.CharField(max_length=255, null=True)
+
     part_of_speach = models.CharField(max_length=255, null=True)
     frequency = models.IntegerField()
     dispersion = models.DecimalField(max_digits=10, decimal_places=2)

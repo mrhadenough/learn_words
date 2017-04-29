@@ -6,4 +6,4 @@ from core.models import Word
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
-        fields = ('id', 'position', 'word', 'part_of_speach', 'translation', )
+        fields = ('id', 'position', 'part_of_speach', 'word_en', 'word_uk', 'word_ru', )
