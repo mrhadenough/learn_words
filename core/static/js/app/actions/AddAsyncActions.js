@@ -2,7 +2,7 @@ import _ from 'underscore'
 import api from '../services/api'
 
 
-const camelize = text =>
+export const camelize = text =>
   text.toLowerCase().replace(/(_[A-Za-z])/g, $1 =>
     $1.toUpperCase().replace('_', '')
   )

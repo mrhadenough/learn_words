@@ -1,7 +1,24 @@
+import _ from 'underscore'
 import { combineReducers } from 'redux'
 import Immutable from 'seamless-immutable'
 
-const defaultReducer = (state, action) => {
+import types from '../actions/Types'
+import { camelize } from '../actions/AddAsyncActions'
+
+const getReducerType = type =>
+  camelize(_.without(type.split('_'), 'SUCCESS', 'FAILED', 'PENDING', 'GET', 'SET').join('_'))
+
+const INIT_STATE = {
+  success: false,
+  failed: false,
+  pending: false,
+  data: {},
+}
+
+const defaultReducer = (type) => (state = new Immutable(INIT_STATE), action) => {
+  if (getReducerType(type) !== getReducerType(action.type)) {
+    return state
+  }
   const newState = { ...state }
   if (action.type.endsWith('PENDING')) {
     return {
@@ -40,7 +57,18 @@ const rootReducer = (state = new Immutable({}), action) => {
   }
 }
 
+const cleanTypes = _.chain(types)
+  .keys()
+  .map(e => getReducerType(e))
+  .uniq()
+  .value()
+
+const reducers = {}
+cleanTypes.forEach(e => {
+  reducers[e] = defaultReducer(e)
+})
+
 export default combineReducers({
   rootReducer,
-  words: defaultReducer,
+  ...reducers,
 })
