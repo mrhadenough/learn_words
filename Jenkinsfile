@@ -3,16 +3,10 @@ pipeline {
   stages {
     stage('lint') {
       steps {
-        parallel(
-          "install dependencies": {
-            sh 'pip install -r requirements-dev.txt'
-            
-          },
-          "lint python": {
-            sh 'prospector'
-            
-          }
-        )
+        sh '''python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+prospector'''
       }
     }
     stage('build static') {
