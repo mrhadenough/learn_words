@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image '3.6.2-alpine3.6'
+    }
+    
+  }
   stages {
     stage('lint') {
       steps {
