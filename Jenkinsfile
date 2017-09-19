@@ -3,7 +3,16 @@ pipeline {
   stages {
     stage('lint') {
       steps {
-        sh 'make lint_python'
+        parallel(
+          "install dependencies": {
+            sh 'pip install -r requirements-dev.txt'
+            
+          },
+          "lint python": {
+            sh 'prospector'
+            
+          }
+        )
       }
     }
     stage('build static') {
